@@ -1,4 +1,5 @@
 #define constant ADDRESS = 0x0102030405060708091011121314151617181920   // dummy address
+#define constant JUMPI_DST = 0x2b
 
 #define macro MAIN() = takes (0) returns (0) {
     // calldatacopy(dstOst, ost, len)
@@ -29,7 +30,7 @@
     swap1           // [0, success]
     returndatasize  // [returndatasize, 0, success]
     swap2           // [success, 0, returndatasize]
-    0x2b            // [returnDst, success, 0, returndatasize]
+    [JUMPI_DST]     // [returnDst, success, 0, returndatasize]
     jumpi           // [0, returndatasize]
 
     revert          // [0, returndatasize]
