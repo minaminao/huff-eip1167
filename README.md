@@ -2,7 +2,7 @@
 
 # Huff - EIP-1167 Minimal Proxy Contract
 
-[EIP-1167: Minimal Proxy Contract](https://eips.ethereum.org/EIPS/eip-1167) implementation with Huff.
+[EIP-1167: Minimal Proxy Contract](https://eips.ethereum.org/EIPS/eip-1167) implementation with [Huff](https://huff.sh/).
 
 ## Source
 
