@@ -4,7 +4,6 @@ pragma solidity ^0.8.15;
 import "foundry-huff/HuffDeployer.sol";
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
-import "openzeppelin-contracts/contracts/utils/Strings.sol";
 
 contract SimpleStoreTest is Test {
     SimpleStore public minimalProxy;
@@ -13,16 +12,15 @@ contract SimpleStoreTest is Test {
 
     function setUp() public {
         simpleStore = SimpleStore(HuffDeployer.deploy("SimpleStore"));
-        string memory simpleStoreAddress = Strings.toHexString(address(simpleStore));
 
         // 45 bytes
         minimalProxy = SimpleStore(
-            new HuffConfig().with_constant("ADDRESS", simpleStoreAddress).deploy("MinimalProxy")
+            new HuffConfig().with_addr_constant("ADDRESS", address(simpleStore)).deploy("MinimalProxy")
         );
 
         // 46 bytes
         minimalProxyUsingLabel = SimpleStore(
-            new HuffConfig().with_constant("ADDRESS", simpleStoreAddress).deploy("MinimalProxyUsingLabel")
+            new HuffConfig().with_addr_constant("ADDRESS", address(simpleStore)).deploy("MinimalProxyUsingLabel")
         );
     }
 
