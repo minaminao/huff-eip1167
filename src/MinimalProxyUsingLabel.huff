@@ -15,25 +15,26 @@
     returndatasize  // [0, 0, 0]
     calldatasize    // [calldatasize, 0, 0, 0]
     returndatasize  // [0, calldatasize, 0, 0, 0]
-    [ADDRESS] // [address, 0, calldatasize, 0, 0, 0]
-    gas // [gas, address, 0, calldatasize, 0, 0, 0]
+    [ADDRESS]       // [address, 0, calldatasize, 0, 0, 0]
+    gas             // [gas, address, 0, calldatasize, 0, 0, 0]
     delegatecall    // [success, 0]
 
     // returndatacopy(dstOst, ost, len)
     returndatasize  // [returndatasize, success, 0]
-    dup3    // [0, returndatasize, success, 0]
-    dup1    // [0, 0, returndatasize, success, 0]
+    dup3            // [0, returndatasize, success, 0]
+    dup1            // [0, 0, returndatasize, success, 0]
     returndatacopy  // [success, 0]
 
     // jumpi(dst, condition)
-    swap1   // [0, success]
+    swap1           // [0, success]
     returndatasize  // [returndatasize, 0, success]
-    swap2   // [success, 0, returndatasize]
-    returnDst   // [returnDst, success, 0, returndatasize] PUSH2, not PUSH1
-    jumpi   // [0, returndatasize]
-    revert
+    swap2           // [success, 0, returndatasize]
+    returnDst       // [returnDst, success, 0, returndatasize] PUSH2, not PUSH1
+    jumpi           // [0, returndatasize]
+
+    revert          // [0, returndatasize]
 
     // return(ost, len)
-    returnDst:
-        return
+    returnDst:  // [0, returndatasize] jumpdst
+        return  // []
 }
