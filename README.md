@@ -3,6 +3,7 @@
 # Huff - EIP-1167 Minimal Proxy Contract
 
 [EIP-1167: Minimal Proxy Contract](https://eips.ethereum.org/EIPS/eip-1167) implementation with [Huff](https://huff.sh/).
+This repo supports dynamic address embedding and gas-efficient bytecode generation for a vanity address (like `0x00000...`).
 
 ## Source
 
@@ -19,7 +20,13 @@
 ## Dynamic Address Embedding
 Embed the address of the delegate destination as follows:
 
-MinimalProxy.huff / MinimalProxyUsingLabel.huff:
+MinimalProxy.huff
+```js
+#define constant ADDRESS = 0x0102030405060708091011121314151617181920 // dummy address
+#define constant JUMPI_DST = 0x2b
+```
+
+MinimalProxyUsingLabel.huff:
 ```js
 #define constant ADDRESS = 0x0102030405060708091011121314151617181920 // dummy address
 ```
