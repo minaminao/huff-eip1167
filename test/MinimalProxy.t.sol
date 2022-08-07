@@ -6,7 +6,7 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 import "openzeppelin-contracts/contracts/utils/Strings.sol";
 
-contract SimpleStoreTest is Test {
+contract MinimalProxyTest is Test {
     SimpleStore public simpleStore;
     SimpleStore public minimalProxy;
     SimpleStore public minimalProxyUsingLabel;
