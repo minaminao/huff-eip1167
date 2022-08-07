@@ -17,17 +17,17 @@ contract MinimalProxyTest is Test {
     function setUp() public {
         simpleStore = SimpleStore(HuffDeployer.deploy("SimpleStore"));
 
-        // 45 bytes
+        // 45 bytes: minimal proxy contract
         minimalProxy = SimpleStore(
             new HuffConfig().with_addr_constant("ADDRESS", address(simpleStore)).deploy("MinimalProxy")
         );
 
-        // 46 bytes
+        // 46 bytes: minimal proxy contract using the jump label
         minimalProxyUsingLabel = SimpleStore(
             new HuffConfig().with_addr_constant("ADDRESS", address(simpleStore)).deploy("MinimalProxyUsingLabel")
         );
 
-        // 40 bytes
+        // 40 bytes: minimal proxy contract with the vanity address
         vm.etch(vanityAddress, address(simpleStore).code);
         string memory vanityAddressString =
             Strings.toHexString(uint160(vanityAddress));
