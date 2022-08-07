@@ -29,12 +29,12 @@ MinimalProxy.t.sol:
 simpleStore = SimpleStore(HuffDeployer.deploy("SimpleStore"));
 string memory simpleStoreAddress = Strings.toHexString(address(simpleStore));
 
-// 46 bytes
+// 45 bytes
 minimalProxy = SimpleStore(
     new HuffConfig().with_constant("ADDRESS", simpleStoreAddress).deploy("MinimalProxy")
 );
 
-// 47 bytes
+// 46 bytes
 minimalProxyUsingLabel = SimpleStore(
     new HuffConfig().with_constant("ADDRESS", simpleStoreAddress).deploy("MinimalProxyUsingLabel")
 );
