@@ -3,7 +3,7 @@
 # Huff - EIP-1167 Minimal Proxy Contract
 
 [EIP-1167: Minimal Proxy Contract](https://eips.ethereum.org/EIPS/eip-1167) implementation with [Huff](https://huff.sh/).
-This repo supports dynamic address embedding and gas-efficient bytecode generation for a vanity address (like `0x00000...`).
+This repo supports dynamic address embedding and gas-efficient bytecode generation for a vanity address (like `0x000000...`).
 
 ## Source
 
