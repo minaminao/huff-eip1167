@@ -1,84 +1,46 @@
 <img align="right" width="150" height="150" top="100" src="./assets/blueprint.png">
 
-# huff-project-template • [![ci](https://github.com/huff-language/huff-project-template/actions/workflows/ci.yaml/badge.svg)](https://github.com/huff-language/huff-project-template/actions/workflows/ci.yaml) ![license](https://img.shields.io/github/license/huff-language/huff-project-template.svg) ![solidity](https://img.shields.io/badge/solidity-^0.8.15-lightgrey)
+# Huff - EIP-1167 Minimal Proxy Contract
 
-Versatile Huff Project Template using Foundry.
+[EIP-1167: Minimal Proxy Contract](https://eips.ethereum.org/EIPS/eip-1167) implementation with Huff.
 
+## Source
 
-## Getting Started
-
-### Requirements
-
-The following will need to be installed in order to use this template. Please follow the links and instructions.
-
--   [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)  
-    -   You'll know you've done it right if you can run `git --version`
--   [Foundry / Foundryup](https://github.com/gakonst/foundry)
-    -   This will install `forge`, `cast`, and `anvil`
-    -   You can test you've installed them right by running `forge --version` and get an output like: `forge 0.2.0 (f016135 2022-07-04T00:15:02.930499Z)`
-    -   To get the latest of each, just run `foundryup`
--   [Huff Compiler](https://docs.huff.sh/get-started/installing/)
-    -   You'll know you've done it right if you can run `huffc --version` and get an output like: `huffc 0.2.0`
-
-### Quickstart
-
-1. Clone this repo or use template
-
-Click "Use this template" on [GitHub](https://github.com/huff-language/huff-project-template) to create a new repository with this repo as the initial state.
-
-Or run:
-
-```
-git clone https://github.com/huff-language/huff-project-template
-cd huff-project-template
+```js
+├── src
+│   ├── MinimalProxy.huff           // using PUSH1 without the jump label
+│   ├── MinimalProxyUsingLabel.huff // using the jump label and PUSH2.
+│   └── SimpleStore.huff
+└── test
+    ├── MinimalProxy.t.sol
+    └── SimpleStore.t.sol
 ```
 
-2. Install dependencies
+## Embedded Address
+Embed the address of the delegate destination as follows:
 
-Once you've cloned and entered into your repository, you need to install the necessary dependencies. In order to do so, simply run:
-
-```shell
-forge install
+MinimalProxy.huff / MinimalProxyUsingLabel.huff:
+```js
+#define constant ADDRESS = 0x0102030405060708091011121314151617181920
 ```
 
-3. Build & Test
+MinimalProxy.t.sol:
+```js
+simpleStore = SimpleStore(HuffDeployer.deploy("SimpleStore"));
+string memory simpleStoreAddress = Strings.toHexString(address(simpleStore));
 
-To build and test your contracts, you can run:
+// 46 bytes
+minimalProxy = SimpleStore(
+    new HuffConfig().with_constant("ADDRESS", simpleStoreAddress).deploy("MinimalProxy")
+);
 
-```shell
-forge build
-forge test
+// 47 bytes
+minimalProxyUsingLabel = SimpleStore(
+    new HuffConfig().with_constant("ADDRESS", simpleStoreAddress).deploy("MinimalProxyUsingLabel")
+);
 ```
 
-For more information on how to use Foundry, check out the [Foundry Github Repository](https://github.com/foundry-rs/foundry/tree/master/forge) and the [foundry-huff library repository](https://github.com/huff-language/foundry-huff).
-
-
-## Blueprint
-
-```ml
-lib
-├─ forge-std — https://github.com/foundry-rs/forge-std
-├─ foundry-huff — https://github.com/huff-language/foundry-huff
-scripts
-├─ Deploy.s.sol — Deployment Script
-src
-├─ SimpleStore — A Simple Storage Contract in Huff
-test
-└─ SimpleStore.t — SimpleStoreTests
+## Test
 ```
-
-
-## License
-
-[The Unlicense](https://github.com/huff-language/huff-project-template/blob/master/LICENSE)
-
-
-## Acknowledgements
-
-- [forge-template](https://github.com/foundry-rs/forge-template)
-- [femplate](https://github.com/abigger87/femplate)
-
-
-## Disclaimer
-
-_These smart contracts are being provided as is. No guarantee, representation or warranty is being made, express or implied, as to the safety or correctness of the user interface or the smart contracts. They have not been audited and as such there can be no assurance they will work as intended, and users may experience delays, failures, errors, omissions, loss of transmitted information or loss of funds. The creators are not liable for any of the foregoing. Users should proceed with caution and use at their own risk._
+forge test -vvvvv
+```
