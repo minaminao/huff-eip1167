@@ -16,12 +16,12 @@
     └── SimpleStore.t.sol
 ```
 
-## Embedded Address
+## Dynamic Address Embedding
 Embed the address of the delegate destination as follows:
 
 MinimalProxy.huff / MinimalProxyUsingLabel.huff:
 ```js
-#define constant ADDRESS = 0x0102030405060708091011121314151617181920
+#define constant ADDRESS = 0x0102030405060708091011121314151617181920 // dummy address
 ```
 
 MinimalProxy.t.sol:
