@@ -29,9 +29,12 @@ contract MinimalProxyTest is Test {
 
         // 40 bytes
         vm.etch(vanityAddress, address(simpleStore).code);
-        string memory vanityAddressString = Strings.toHexString(uint160(vanityAddress));
-        uint256 numberOfLeadingZeroBytes = ((2 + 20 * 2) - bytes(vanityAddressString).length) / 2;
-        string memory jumpiDst = Strings.toHexString(defaultJumpiDst - numberOfLeadingZeroBytes, 1);
+        string memory vanityAddressString =
+            Strings.toHexString(uint160(vanityAddress));
+        uint256 numberOfLeadingZeroBytes =
+            ((2 + 20 * 2) - bytes(vanityAddressString).length) / 2;
+        string memory jumpiDst =
+            Strings.toHexString(defaultJumpiDst - numberOfLeadingZeroBytes, 1);
         minimalProxyWithVanityAddress = SimpleStore(
             new HuffConfig().with_constant("ADDRESS", vanityAddressString).with_constant("JUMPI_DST", jumpiDst).deploy("MinimalProxy")
         );
