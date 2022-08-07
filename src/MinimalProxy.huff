@@ -35,6 +35,6 @@
     revert  // [0, returndatasize]
 
     // return(ost, len)
-    returnDst: // jumpdst
+    returnDst:  // [0, returndatasize] jumpdst
         return  // []
 }
