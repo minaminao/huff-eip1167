@@ -34,7 +34,7 @@ Embed the address of the delegate destination as follows:
 ```
 
 `MinimalProxy.t.sol`:
-```js
+```solidity
 contract MinimalProxyTest is Test {
     SimpleStore simpleStore;
     SimpleStore minimalProxy;
