@@ -7,12 +7,12 @@ import "forge-std/console.sol";
 import "openzeppelin-contracts/contracts/utils/Strings.sol";
 
 contract MinimalProxyTest is Test {
-    SimpleStore public simpleStore;
-    SimpleStore public minimalProxy;
-    SimpleStore public minimalProxyUsingLabel;
-    SimpleStore public minimalProxyWithVanityAddress;
-    uint256 public defaultJumpiDst = 0x2b;
-    address public vanityAddress = 0x0000000000060708091011121314151617181920;
+    SimpleStore simpleStore;
+    SimpleStore minimalProxy;
+    SimpleStore minimalProxyUsingLabel;
+    SimpleStore minimalProxyWithVanityAddress;
+    uint256 constant defaultJumpiDst = 0x2b;
+    address constant vanityAddress = 0x0000000000060708091011121314151617181920;
 
     function setUp() public {
         simpleStore = SimpleStore(HuffDeployer.deploy("SimpleStore"));
