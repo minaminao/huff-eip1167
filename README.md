@@ -36,20 +36,19 @@ Embed the address of the delegate destination as follows:
 `MinimalProxy.t.sol`:
 ```js
 contract MinimalProxyTest is Test {
-    SimpleStore public simpleStore;
-    SimpleStore public minimalProxy;
-    SimpleStore public minimalProxyUsingLabel;
-    SimpleStore public minimalProxyWithVanityAddress;
-    uint256 public defaultJumpiDst = 0x2b;
-    address public vanityAddress = 0x0000000000060708091011121314151617181920;
+    SimpleStore simpleStore;
+    SimpleStore minimalProxy;
+    SimpleStore minimalProxyUsingLabel;
+    SimpleStore minimalProxyWithVanityAddress;
+    uint256 constant defaultJumpiDst = 0x2b;
+    address constant vanityAddress = 0x0000000000060708091011121314151617181920;
 
     function setUp() public {
         simpleStore = SimpleStore(HuffDeployer.deploy("SimpleStore"));
 
         // 45 bytes: minimal proxy contract
-        minimalProxy = SimpleStore(
-            new HuffConfig().with_addr_constant("ADDRESS", address(simpleStore)).deploy("MinimalProxy")
-        );
+        minimalProxy =
+            SimpleStore(new HuffConfig().with_addr_constant("ADDRESS", address(simpleStore)).deploy("MinimalProxy"));
 
         // 46 bytes: minimal proxy contract using the jump label
         minimalProxyUsingLabel = SimpleStore(
@@ -58,12 +57,9 @@ contract MinimalProxyTest is Test {
 
         // 40 bytes: minimal proxy contract with the vanity address
         vm.etch(vanityAddress, address(simpleStore).code);
-        string memory vanityAddressString =
-            Strings.toHexString(uint160(vanityAddress));
-        uint256 numberOfLeadingZeroBytes =
-            ((2 + 20 * 2) - bytes(vanityAddressString).length) / 2;
-        string memory jumpiDst =
-            Strings.toHexString(defaultJumpiDst - numberOfLeadingZeroBytes, 1);
+        string memory vanityAddressString = Strings.toHexString(uint160(vanityAddress));
+        uint256 numberOfLeadingZeroBytes = ((2 + 20 * 2) - bytes(vanityAddressString).length) / 2;
+        string memory jumpiDst = Strings.toHexString(defaultJumpiDst - numberOfLeadingZeroBytes, 1);
         minimalProxyWithVanityAddress = SimpleStore(
             new HuffConfig().with_constant("ADDRESS", vanityAddressString).with_constant("JUMPI_DST", jumpiDst).deploy("MinimalProxy")
         );
